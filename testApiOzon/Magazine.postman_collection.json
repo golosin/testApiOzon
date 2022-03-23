@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "5c635adb-228a-40b0-ba22-c483bef81639",
+		"name": "Magazine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Создать или обновить товар",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CREATE product, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Set value 'task_id'\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.environment.set(\"task_id\", jsonData.result.task_id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"items\": [\r\n{\r\n\"attributes\": [\r\n{\r\n\"complex_id\": 0,\r\n\"id\": 5076,\r\n\"values\": [\r\n{\r\n\"dictionary_value_id\": 971082156,\r\n\"value\": \"Стойка для акустической системы\"\r\n}\r\n]\r\n},\r\n{\r\n\"complex_id\": 0,\r\n\"id\": 9048,\r\n\"values\": [\r\n{\r\n\"value\": \"Комплект защитных плёнок для X3 NFC. Темный хлопок\"\r\n}\r\n]\r\n},\r\n{\r\n\"complex_id\": 0,\r\n\"id\": 8229,\r\n\"values\": [\r\n{\r\n\"dictionary_value_id\": 95911,\r\n\"value\": \"Комплект защитных плёнок для X3 NFC. Темный хлопок\"\r\n}\r\n]\r\n},\r\n{\r\n\"complex_id\": 0,\r\n\"id\": 85,\r\n\"values\": [\r\n{\r\n\"dictionary_value_id\": 5060050,\r\n\"value\": \"Samsung\"\r\n}\r\n]\r\n},\r\n{\r\n\"complex_id\": 0,\r\n\"id\": 10096,\r\n\"values\": [\r\n{\r\n\"dictionary_value_id\": 61576,\r\n\"value\": \"серый\"\r\n}\r\n]\r\n}\r\n],\r\n\"barcode\": \"112772873170\",\r\n\"category_id\": 17033876,\r\n\"color_image\": \"\",\r\n\"complex_attributes\": [ ],\r\n\"depth\": 10,\r\n\"dimension_unit\": \"mm\",\r\n\"height\": 250,\r\n\"images\": [ ],\r\n\"images360\": [ ],\r\n\"name\": \"Комплект защитных плёнок для X3 NFC. Темный хлопок\",\r\n\"offer_id\": \"143210608\",\r\n\"old_price\": \"1100\",\r\n\"pdf_list\": [ ],\r\n\"premium_price\": \"900\",\r\n\"price\": \"1000\",\r\n\"primary_image\": \"\",\r\n\"vat\": \"0.1\",\r\n\"weight\": 100,\r\n\"weight_unit\": \"g\",\r\n\"width\": 150\r\n}\r\n]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v2/product/import",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v2",
+						"product",
+						"import"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Узнать статус добавления товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"СHECK OF ADDING a product, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Set value 'product_id', 'offer_id'\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    pm.environment.set(\"product_id\", jsonData.result.items[0].product_id);\r",
+							"    pm.environment.set(\"offer_id\", jsonData.result.items[0].offer_id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"task_id\": \"{{task_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v1/product/import/info",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v1",
+						"product",
+						"import",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновить цену",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"SET NEW PRICE, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"СHECK OF UPDATED price\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.result[0].updated).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"prices\": [\r\n{\r\n\"min_price\": \"800\",\r\n\"offer_id\": \"\",\r\n\"old_price\": \"0\",\r\n\"price\": \"1498\",\r\n\"product_id\": {{product_id}}\r\n}\r\n]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v1/product/import/prices",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v1",
+						"product",
+						"import",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить информацию о цене товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET NEW PRICE, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CHECK NEW PRICE\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Number(jsonData.result.items[0].price.price)).to.eql(1498);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"filter\": {\r\n\"product_id\": [\r\n\"{{product_id}}\"\r\n],\r\n\"visibility\": \"ALL\"\r\n},\r\n\"limit\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v3/product/info/prices",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v3",
+						"product",
+						"info",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Перенести товар в архив",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"MOVE TO ARCHIVE, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CHECK MOVE\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.result).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"product_id\": [\r\n\"{{product_id}}\"\r\n]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v1/product/archive",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v1",
+						"product",
+						"archive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить товар без SKU из архива",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"DELETE FROM ARCHIVE, Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CHECK DELETED\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status[0].is_deleted).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Id",
+						"value": "415786",
+						"type": "text"
+					},
+					{
+						"key": "Api-Key",
+						"value": "810126fc-22e6-459c-baba-633156d159e3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"products\": [\r\n{\r\n\"offer_id\": \"{{offer_id}}\"\r\n}\r\n]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-seller.ozon.ru/v2/products/delete",
+					"protocol": "https",
+					"host": [
+						"api-seller",
+						"ozon",
+						"ru"
+					],
+					"path": [
+						"v2",
+						"products",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
